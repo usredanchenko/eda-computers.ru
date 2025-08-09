@@ -1,0 +1,31 @@
+@tailwind base; @tailwind components; @tailwind utilities;
+:root { color-scheme: dark; }
+html, body { @apply bg-bg text-white; }
+a { @apply outline-none focus-visible:ring-2 focus-visible:ring-neon-cyan/70 rounded; }
+
+.container-px { @apply px-3 xs:px-4 md:px-6; }
+.safe-bottom { padding-bottom: max(env(safe-area-inset-bottom), 10px); }
+.neon-panel { background: linear-gradient(to bottom right, rgba(16,24,32,0.7), rgba(16,24,32,0.35));
+  border: 1px solid rgba(0,240,255,0.25);
+  box-shadow: 0 0 24px rgba(0,240,255,0.25), inset 0 0 12px rgba(255,0,230,0.15);
+  backdrop-filter: blur(10px); }
+.bg-grid { background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px; }
+.no-wrap { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nowrap-sm { white-space: normal; } @media (min-width: 768px) { .nowrap-sm { white-space: nowrap; } }
+button, a { min-height: 44px; }
+.stack-sm { display: flex; flex-direction: column; gap: .5rem; } @media (min-width: 640px) { .stack-sm { flex-direction: row; gap: .75rem; } }
+.img-card { position: relative; aspect-ratio: 16/10; overflow: hidden; border-radius: 0.75rem; }
+.img-bg { position: absolute; inset: 0; opacity: .35; mix-blend-mode: screen; }
+.sheet-handle { width: 48px; height: 4px; background: rgba(255,255,255,.25); border-radius: 999px; margin: 8px auto; }
+* { hyphens: none; }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+/* Нативный скролл внутри модалок/дроверов */
+.scroll-y {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}

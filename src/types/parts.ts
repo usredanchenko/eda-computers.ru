@@ -1,0 +1,12 @@
+export type Category = "CPU" | "MB" | "RAM" | "GPU" | "STORAGE" | "PSU" | "COOLER" | "CASE";
+export type BasePart = { id: string; category: Category; brand: string; name: string; price: number; image: string; };
+export type CPU = BasePart & { category: "CPU"; socket: "AM5" | "LGA1700"; tdp: number; };
+export type MB = BasePart & { category: "MB"; socket: CPU["socket"]; chipset: string; ramType: "DDR4" | "DDR5"; formFactor: "ATX" | "mATX" | "ITX"; pcieGen: 3 | 4 | 5; };
+export type RAM = BasePart & { category: "RAM"; type: "DDR4" | "DDR5"; speedMHz: number; sizeGB: number; sticks: number; };
+export type GPU = BasePart & { category: "GPU"; pcieGen: 3 | 4 | 5; tdp: number; lengthMm: number; };
+export type STORAGE = BasePart & { category: "STORAGE"; kind: "NVMe" | "SATA"; sizeGB: number; nvmeGen?: 3 | 4 | 5; };
+export type PSU = BasePart & { category: "PSU"; watts: number; eightyPlus: "Bronze" | "Gold" | "Platinum"; };
+export type COOLER = BasePart & { category: "COOLER"; sockets: CPU["socket"][]; heightMm: number; tdpSupport: number; };
+export type CASE = BasePart & { category: "CASE"; formFactor: MB["formFactor"] | "E-ATX"; gpuMaxLengthMm: number; cpuCoolerMaxHeightMm: number; };
+export type AnyPart = CPU | MB | RAM | GPU | STORAGE | PSU | COOLER | CASE;
+export type BuildState = Partial<{ CPU: CPU; MB: MB; RAM: RAM; GPU: GPU; STORAGE: STORAGE; PSU: PSU; COOLER: COOLER; CASE: CASE; }>;
