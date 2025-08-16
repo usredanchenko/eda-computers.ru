@@ -1,0 +1,132 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: eda-computers-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: eda_computers
+      POSTGRES_USER: eda_user
+      POSTGRES_PASSWORD: eda_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - eda-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eda_user -d eda_computers"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  redis:
+    image: redis:7-alpine
+    container_name: eda-computers-redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - eda-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: eda-computers-server
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: eda_computers
+      DB_USER: eda_user
+      DB_PASSWORD: eda_password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
+      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
+      PORT: 3001
+    volumes:
+      - server_logs:/app/logs
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - eda-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    container_name: eda-computers-web
+    restart: unless-stopped
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:3001}
+      NEXT_TELEMETRY_DISABLED: 1
+    ports:
+      - "3000:3000"
+    depends_on:
+      server:
+        condition: service_healthy
+    networks:
+      - eda-network
+    healthcheck:
+      test: ["CMD", "netstat", "-tlnp", "|", "grep", ":3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  nginx:
+    image: nginx:alpine
+    container_name: eda-computers-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - web
+      - server
+    networks:
+      - eda-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health", "||", "exit", "0"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+volumes:
+  postgres_data:
+  redis_data:
+  server_logs:
+
+networks:
+  eda-network:
+    driver: bridge

@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+.vercel/
+
+# Build artifacts
+build/
+dist/
+coverage/
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+**/.DS_Store
+**/coverage/
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.production
+
+# Editor
+.vscode/
+.idea/
+
+# Docker
+*.pid
+
+# Misc
+*.sqlite

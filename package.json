@@ -1,0 +1,43 @@
+{
+  "name": "eda-computers",
+  "version": "1.0.0",
+  "description": "EDA Computers - PC Configurator",
+  "scripts": {
+    "dev": "docker-compose up",
+    "dev:build": "docker-compose up --build",
+    "build": "docker-compose build",
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down",
+    "clean": "docker-compose down -v --remove-orphans",
+    "logs": "docker-compose logs -f",
+    "logs:web": "docker-compose logs -f web",
+    "logs:server": "docker-compose logs -f server",
+    "logs:db": "docker-compose logs -f postgres",
+    "restart": "docker-compose restart",
+    "restart:web": "docker-compose restart web",
+    "restart:server": "docker-compose restart server",
+    "shell:web": "docker-compose exec web sh",
+    "shell:server": "docker-compose exec server sh",
+    "shell:db": "docker-compose exec postgres psql -U postgres -d eda_computers",
+    "test": "docker-compose exec web npm test",
+    "test:watch": "docker-compose exec web npm run test:watch",
+    "lint": "docker-compose exec web npm run lint",
+    "type-check": "docker-compose exec web npm run type-check",
+    "seed": "docker-compose exec server npm run seed",
+    "migrate": "docker-compose exec server npm run migrate",
+    "migrate:reset": "docker-compose exec server npm run migrate:reset",
+    "health": "curl -f http://localhost:3001/health || echo 'Server not healthy'",
+    "status": "docker-compose ps",
+    "backup": "docker-compose exec postgres pg_dump -U postgres eda_computers > backup_$(date +%Y%m%d_%H%M%S).sql",
+    "restore": "echo 'Usage: docker-compose exec postgres psql -U postgres eda_computers < backup_file.sql'",
+    "setup": "npm run build && npm run start && sleep 10 && npm run seed",
+    "reset": "npm run clean && npm run setup"
+  },
+  "keywords": ["pc", "configurator", "eda", "computers", "docker", "nextjs", "express"],
+  "author": "EDA Computers",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
