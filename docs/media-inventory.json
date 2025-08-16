@@ -1,0 +1,216 @@
+{
+  "version": "1.0",
+  "created_at": "2024-02-26T12:00:00Z",
+  "description": "Реестр медиа для компонентов EDA Computers",
+  "components": {
+    "processors": {
+      "category_id": 1,
+      "icon_component": "CpuIcon",
+      "description": "Процессоры - центральные процессоры Intel и AMD",
+      "items": [
+        {
+          "id": 1,
+          "name": "Intel Core i7-13700K",
+          "media_type": "icon",
+          "icon_name": "CpuIcon",
+          "alt_text": "Процессор Intel Core i7-13700K",
+          "source": "internal_svg",
+          "license": "proprietary"
+        },
+        {
+          "id": 2,
+          "name": "AMD Ryzen 7 7700X",
+          "media_type": "icon",
+          "icon_name": "CpuIcon",
+          "alt_text": "Процессор AMD Ryzen 7 7700X",
+          "source": "internal_svg",
+          "license": "proprietary"
+        }
+      ]
+    },
+    "motherboards": {
+      "category_id": 2,
+      "icon_component": "MotherboardIcon",
+      "description": "Материнские платы ASUS, MSI и других производителей",
+      "items": [
+        {
+          "id": 5,
+          "name": "ASUS ROG STRIX Z790-E",
+          "media_type": "icon",
+          "icon_name": "MotherboardIcon",
+          "alt_text": "Материнская плата ASUS ROG STRIX Z790-E",
+          "source": "internal_svg",
+          "license": "proprietary"
+        },
+        {
+          "id": 6,
+          "name": "MSI MPG B650 CARBON",
+          "media_type": "icon",
+          "icon_name": "MotherboardIcon",
+          "alt_text": "Материнская плата MSI MPG B650 CARBON",
+          "source": "internal_svg",
+          "license": "proprietary"
+        }
+      ]
+    },
+    "gpus": {
+      "category_id": 3,
+      "icon_component": "GpuIcon",
+      "description": "Видеокарты NVIDIA RTX и AMD RX",
+      "items": [
+        {
+          "id": 3,
+          "name": "NVIDIA RTX 4070 Ti",
+          "media_type": "icon",
+          "icon_name": "GpuIcon",
+          "alt_text": "Видеокарта NVIDIA RTX 4070 Ti",
+          "source": "internal_svg",
+          "license": "proprietary"
+        },
+        {
+          "id": 4,
+          "name": "AMD RX 7800 XT",
+          "media_type": "icon",
+          "icon_name": "GpuIcon",
+          "alt_text": "Видеокарта AMD RX 7800 XT",
+          "source": "internal_svg",
+          "license": "proprietary"
+        }
+      ]
+    },
+    "ram": {
+      "category_id": 4,
+      "icon_component": "RamIcon",
+      "description": "Оперативная память DDR5",
+      "items": [
+        {
+          "id": 7,
+          "name": "Corsair Vengeance 32GB DDR5-6000",
+          "media_type": "icon",
+          "icon_name": "RamIcon",
+          "alt_text": "Оперативная память Corsair Vengeance 32GB DDR5-6000",
+          "source": "internal_svg",
+          "license": "proprietary"
+        },
+        {
+          "id": 8,
+          "name": "G.Skill Trident Z5 32GB DDR5-6400",
+          "media_type": "icon",
+          "icon_name": "RamIcon",
+          "alt_text": "Оперативная память G.Skill Trident Z5 32GB DDR5-6400",
+          "source": "internal_svg",
+          "license": "proprietary"
+        }
+      ]
+    },
+    "storage": {
+      "category_id": 5,
+      "icon_component": "StorageIcon",
+      "description": "SSD накопители NVMe",
+      "items": [
+        {
+          "id": 9,
+          "name": "Samsung 970 EVO Plus 1TB",
+          "media_type": "icon",
+          "icon_name": "StorageIcon",
+          "alt_text": "SSD накопитель Samsung 970 EVO Plus 1TB",
+          "source": "internal_svg",
+          "license": "proprietary"
+        },
+        {
+          "id": 10,
+          "name": "WD Black SN850X 2TB",
+          "media_type": "icon",
+          "icon_name": "StorageIcon",
+          "alt_text": "SSD накопитель WD Black SN850X 2TB",
+          "source": "internal_svg",
+          "license": "proprietary"
+        }
+      ]
+    },
+    "psu": {
+      "category_id": 6,
+      "icon_component": "PsuIcon",
+      "description": "Блоки питания 80+ Gold",
+      "items": [
+        {
+          "id": 11,
+          "name": "Corsair RM850x",
+          "media_type": "icon",
+          "icon_name": "PsuIcon",
+          "alt_text": "Блок питания Corsair RM850x 850W",
+          "source": "internal_svg",
+          "license": "proprietary"
+        },
+        {
+          "id": 12,
+          "name": "Seasonic Focus GX-750",
+          "media_type": "icon",
+          "icon_name": "PsuIcon",
+          "alt_text": "Блок питания Seasonic Focus GX-750 750W",
+          "source": "internal_svg",
+          "license": "proprietary"
+        }
+      ]
+    }
+  },
+  "builds": {
+    "description": "Готовые сборки компьютеров",
+    "items": [
+      {
+        "id": 1,
+        "name": "Игровая сборка RTX 4070 Ti",
+        "media_type": "icon",
+        "icon_name": "CaseIcon",
+        "alt_text": "Игровая сборка с RTX 4070 Ti",
+        "source": "internal_svg",
+        "license": "proprietary"
+      },
+      {
+        "id": 2,
+        "name": "Бюджетная сборка RX 7800 XT",
+        "media_type": "icon",
+        "icon_name": "CaseIcon",
+        "alt_text": "Бюджетная сборка с RX 7800 XT",
+        "source": "internal_svg",
+        "license": "proprietary"
+      },
+      {
+        "id": 3,
+        "name": "Профессиональная сборка RTX 4080",
+        "media_type": "icon",
+        "icon_name": "CaseIcon",
+        "alt_text": "Профессиональная сборка с RTX 4080",
+        "source": "internal_svg",
+        "license": "proprietary"
+      },
+      {
+        "id": 4,
+        "name": "Компактная сборка ITX",
+        "media_type": "icon",
+        "icon_name": "CaseIcon",
+        "alt_text": "Компактная ITX сборка",
+        "source": "internal_svg",
+        "license": "proprietary"
+      }
+    ]
+  },
+  "optimization": {
+    "image_formats": ["webp", "svg"],
+    "lazy_loading": true,
+    "responsive_images": true,
+    "alt_text_required": true,
+    "accessibility": {
+      "aria_labels": true,
+      "focus_indicators": true,
+      "color_contrast": "AAA"
+    }
+  },
+  "notes": [
+    "Все изображения заменены на неоновые SVG иконки для единообразия дизайна",
+    "Иконки оптимизированы для веб-использования",
+    "Поддержка темной темы и неоновых эффектов",
+    "Доступность обеспечена через aria-labels и alt-тексты"
+  ]
+}
+
