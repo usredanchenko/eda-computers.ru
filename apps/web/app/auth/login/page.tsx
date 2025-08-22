@@ -26,6 +26,12 @@ function LoginPageContent() {
     }
   }, [isAuthenticated, user, router, defaultRedirect]);
 
+  useEffect(() => {
+    // Очищаем ошибку при первом входе на страницу
+    clearError?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -37,6 +43,13 @@ function LoginPageContent() {
     } finally {
       // setIsLoading(false); // This line is removed as per the new useAuth hook
     }
+  };
+
+  const handleFieldChange = (setter: (v: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (error) {
+      clearError?.();
+    }
+    setter(e.target.value);
   };
 
   return (
@@ -81,7 +94,7 @@ function LoginPageContent() {
                 autoComplete="email"
                 required
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleFieldChange(setEmail)}
                 className="w-full px-4 py-3 bg-dark-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:border-transparent transition-all duration-300"
                 placeholder="Введите ваш email"
               />
@@ -99,7 +112,7 @@ function LoginPageContent() {
                 autoComplete="current-password"
                 required
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handleFieldChange(setPassword)}
                 className="w-full px-4 py-3 bg-dark-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neon-cyan focus:border-transparent transition-all duration-300"
                 placeholder="Введите ваш пароль"
               />

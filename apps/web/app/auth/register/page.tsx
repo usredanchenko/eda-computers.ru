@@ -30,6 +30,12 @@ function RegisterPageContent() {
     }
   }, [isAuthenticated, user, router, defaultRedirect]);
 
+  useEffect(() => {
+    // Сброс ошибки при заходе на страницу
+    clearError?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
@@ -73,10 +79,10 @@ function RegisterPageContent() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (error) {
+      clearError?.();
+    }
     setFormData(prev => ({ ...prev, [name]: value }));
-    
-    // Очищаем ошибку при вводе
-    // clearError(); // This line was removed as per the new_code, as clearError is no longer part of useAuth
   };
 
   return (

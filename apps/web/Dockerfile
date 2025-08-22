@@ -8,8 +8,9 @@ WORKDIR /app
 
 # Копируем файлы зависимостей
 COPY package*.json ./
-# Устанавливаем только прод-зависимости и игнорируем скрипты (например, husky)
-RUN npm ci --omit=dev --ignore-scripts || npm install --omit=dev --ignore-scripts
+# Важно: для сборки Next нужны dev-зависимости (tailwindcss, typescript и т.п.)
+# Ставим все зависимости, но игнорируем скрипты (husky и т.д.)
+RUN npm ci --ignore-scripts || npm install --ignore-scripts
 
 # Этап сборки
 FROM base AS builder

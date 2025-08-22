@@ -31,7 +31,7 @@ export const FPS_TARGETS: Record<string, FpsTarget> = {
  * Расчёт общего TDP сборки
  */
 export function calculateTotalTdp(components: Component[]): number {
-  return components.reduce((total, component) => total + component.tdp, 0);
+  return components.reduce((total, component) => total + Number(component.tdp || 0), 0);
 }
 
 /**
@@ -65,7 +65,10 @@ export function checkPsuCompatibility(selectedPsu: Component | null, recommended
     };
   }
 
-  const selectedWattage = selectedPsu.specs?.wattage || 0;
+  const rawWattage = selectedPsu.specs?.wattage as unknown;
+  const selectedWattage = typeof rawWattage === 'string'
+    ? parseInt(rawWattage.replace(/[^0-9]/g, ''), 10) || 0
+    : Number(rawWattage || 0);
   const isCompatible = selectedWattage >= recommendedPsu;
   const isInsufficient = selectedWattage > 0 && selectedWattage < recommendedPsu;
   
@@ -109,12 +112,17 @@ export function getCompatiblePsus(availablePsus: Component[], recommendedPsu: nu
   insufficient: Component[];
   optimal: Component[];
 } {
-  const compatible = availablePsus.filter(psu => psu.specs?.wattage >= recommendedPsu);
-  const insufficient = availablePsus.filter(psu => psu.specs?.wattage < recommendedPsu);
+  const getWattage = (psu: Component): number => {
+    const raw = psu.specs?.wattage as unknown;
+    return typeof raw === 'string' ? (parseInt(raw.replace(/[^0-9]/g, ''), 10) || 0) : Number(raw || 0);
+  };
+
+  const compatible = availablePsus.filter(psu => getWattage(psu) >= recommendedPsu);
+  const insufficient = availablePsus.filter(psu => getWattage(psu) < recommendedPsu);
   
   // Оптимальные БП с запасом 30-50%
   const optimal = compatible.filter(psu => {
-    const wattage = psu.specs?.wattage || 0;
+    const wattage = getWattage(psu);
     const margin = ((wattage - recommendedPsu) / recommendedPsu) * 100;
     return margin >= 30 && margin <= 50;
   });
@@ -136,13 +144,13 @@ export function calculateFps(components: Component[]): { fortnite: number; gta5:
   
   // Базовый FPS от GPU
   const baseFps = {
-    fortnite: gpu.fps_fortnite,
-    gta5: gpu.fps_gta5,
-    warzone: gpu.fps_warzone
+    fortnite: Number(gpu.fps_fortnite || 0),
+    gta5: Number(gpu.fps_gta5 || 0),
+    warzone: Number(gpu.fps_warzone || 0)
   };
   
   // Модификатор от CPU (CPU может ограничивать производительность)
-  const cpuModifier = Math.min(cpu.fps_fortnite / 200, 1.2); // Максимум +20%
+  const cpuModifier = Math.min(Number(cpu.fps_fortnite || 0) / 200, 1.2); // Максимум +20%
   
   return {
     fortnite: Math.round(baseFps.fortnite * cpuModifier),
@@ -210,7 +218,7 @@ export function calculateBuild(components: Component[]): BuildCalculation {
   const totalTdp = calculateTotalTdp(components);
   const recommendedPsu = calculateRecommendedPsu(totalTdp);
   const fpsData = calculateFps(components);
-  const totalPrice = components.reduce((sum, c) => sum + c.price, 0);
+  const totalPrice = components.reduce((sum, c) => sum + Number(c.price || 0), 0);
   const compatibilityIssues = checkCompatibility(components);
   
   const warnings: string[] = [];
