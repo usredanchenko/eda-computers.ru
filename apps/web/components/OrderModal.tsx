@@ -111,13 +111,20 @@ export default function OrderModal({
       return;
     }
 
+    // Требуем авторизацию для создания заказа на сервере
+    if (!isAuthenticated) {
+      setError('Для оформления заказа войдите в систему');
+      router.push('/auth/login?redirect=/constructor');
+      return;
+    }
+
     setIsSubmitting(true);
     setError(null);
 
     try {
       // Определяем компоненты для заказа
-      const orderComponents = buildComponents || items;
-      const orderTotalPrice = buildPrice || totalPrice;
+      const orderComponents = (buildComponents && Array.isArray(buildComponents) ? buildComponents : items) || [];
+      const orderTotalPrice = Number((buildPrice ?? totalPrice) || 0);
 
       // Создаем заказ
       const orderData = {
