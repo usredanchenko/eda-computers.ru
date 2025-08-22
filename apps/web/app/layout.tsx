@@ -11,6 +11,11 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'EDA Computers - Сборка компьютеров',
   description: 'Соберите свой идеальный компьютер с EDA Computers',
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 // Компонент-обертка для клиентских провайдеров
