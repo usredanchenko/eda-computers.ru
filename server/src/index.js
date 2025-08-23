@@ -8,14 +8,23 @@ const { performanceMonitor, getPerformanceStats } = require('./middleware/perfor
 
 const app = express();
 
-// CORS (reflect exact Origin and allow credentials)
-const allowedOrigins = new Set([
+// CORS (allow credentials; allow configured domains including production)
+const rawAllowed = [
   process.env.FRONTEND_URL || 'http://localhost:3000',
+  process.env.FRONTEND_URL_ALT || '',
   'http://localhost:3000',
   'http://127.0.0.1:3000',
   'http://localhost',
-  'https://localhost'
-]);
+  'https://localhost',
+  'https://eda-computers.ru',
+  'https://www.eda-computers.ru'
+].filter(Boolean);
+const allowedOrigins = new Set(rawAllowed);
+const allowedHostnames = new Set(
+  rawAllowed.map((o) => {
+    try { return new URL(o).hostname; } catch { return null; }
+  }).filter(Boolean)
+);
 
 app.use((req, res, next) => {
   res.header('Vary', 'Origin');
@@ -25,7 +34,12 @@ app.use((req, res, next) => {
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
-    if (allowedOrigins.has(origin)) return callback(null, true);
+    try {
+      const url = new URL(origin);
+      if (allowedOrigins.has(origin) || allowedHostnames.has(url.hostname)) {
+        return callback(null, true);
+      }
+    } catch {}
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
@@ -36,7 +50,12 @@ app.use(cors({
 app.options('*', cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
-    if (allowedOrigins.has(origin)) return callback(null, true);
+    try {
+      const url = new URL(origin);
+      if (allowedOrigins.has(origin) || allowedHostnames.has(url.hostname)) {
+        return callback(null, true);
+      }
+    } catch {}
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
