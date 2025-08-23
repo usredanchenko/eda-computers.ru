@@ -24,6 +24,7 @@ router.get('/csrf-token', (req, res) => {
     httpOnly: false,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
+    path: '/',
     maxAge: 24 * 60 * 60 * 1000 // 24 часа
   });
   res.json({ csrfToken });
