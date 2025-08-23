@@ -94,7 +94,7 @@ services:
     networks:
       - eda-network
     healthcheck:
-      test: ["CMD", "netstat", "-tlnp", "|", "grep", ":3000"]
+      test: ["CMD-SHELL", "netstat -tlnp | grep :3000"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -111,12 +111,14 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./nginx/ssl:/etc/nginx/ssl:ro
     depends_on:
-      - web
-      - server
+      web:
+        condition: service_healthy
+      server:
+        condition: service_healthy
     networks:
       - eda-network
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health", "||", "exit", "0"]
+      test: ["CMD-SHELL", "wget -q --tries=1 --spider http://localhost/health || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 3
