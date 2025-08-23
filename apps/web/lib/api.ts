@@ -10,8 +10,15 @@ class ApiClient {
   private csrfToken: string | null = null;
 
   private async getCSRFToken(): Promise<string> {
-    if (this.csrfToken) return this.csrfToken;
-    
+    // Prefer reading current cookie to ensure header matches cookie exactly
+    if (typeof window !== 'undefined') {
+      const m = document.cookie.match(/(?:^|; )csrf_token=([^;]+)/);
+      if (m) {
+        this.csrfToken = decodeURIComponent(m[1]);
+        return this.csrfToken;
+      }
+    }
+
     try {
       const response = await fetch(`${API_BASE_URL}/api/auth/csrf-token`, {
         credentials: 'include'
