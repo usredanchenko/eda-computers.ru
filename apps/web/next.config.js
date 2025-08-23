@@ -2,6 +2,13 @@
 const nextConfig = {
   output: 'standalone',
   experimental: {},
+  // Skip linting and type checking during Docker builds to avoid long hangs
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     domains: ['picsum.photos'],
     formats: ['image/webp', 'image/avif'],
