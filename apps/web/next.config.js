@@ -2,6 +2,8 @@
 const nextConfig = {
   output: 'standalone',
   experimental: {},
+  // Reduce build pressure on low-RAM servers
+  swcMinify: false,
   // Skip linting and type checking during Docker builds to avoid long hangs
   eslint: {
     ignoreDuringBuilds: true,
