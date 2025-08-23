@@ -53,9 +53,9 @@ export default function ComponentCard({
     >
       {/* Иконка компонента (всегда неоновая, без изображений) */}
       <div className="relative mb-4">
-        <div className="w-full h-32 md:h-40 rounded-lg overflow-hidden bg-gradient-to-br from-neon-cyan/10 to-neon-pink/10 flex items-center justify-center">
+        <div className="w-full h-28 sm:h-32 md:h-40 rounded-lg overflow-hidden bg-gradient-to-br from-neon-cyan/10 to-neon-pink/10 flex items-center justify-center">
           <IconComponent 
-            size={64} 
+            size={56} 
             className="text-neon-cyan drop-shadow-[0_0_12px_rgba(0,255,255,0.8)]" 
             glow={true}
           />
