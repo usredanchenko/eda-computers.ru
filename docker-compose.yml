@@ -58,6 +58,7 @@ services:
       JWT_SECRET: ${JWT_SECRET:-your-super-secret-jwt-key-change-in-production}
       FRONTEND_URL: ${FRONTEND_URL:-http://localhost:3000}
       PORT: 3001
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN:-eda-computers.ru}
     volumes:
       - server_logs:/app/logs
     ports:
