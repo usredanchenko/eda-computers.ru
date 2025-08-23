@@ -37,7 +37,7 @@ export default function Navigation() {
   }, []);
 
   return (
-    <div role="navigation" className="sticky top-0 z-50 bg-dark-900/50 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]">
+    <div role="navigation" className="sticky top-0 z-50 bg-dark-900/50 backdrop-blur-xl border-b border-white/10 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.6)]" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
       <div className="container mx-auto px-4 relative">
         <motion.div
           initial={{ y: -10, opacity: 0 }}
@@ -54,7 +54,7 @@ export default function Navigation() {
             >
               <span className="text-dark-950 font-bold text-lg">E</span>
             </motion.div>
-            <span className="text-white font-bold text-xl tracking-wide drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] group-hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.35)] transition-all">EDA Computers</span>
+            <span className="text-white font-bold text-lg sm:text-xl tracking-wide drop-shadow-[0_0_6px_rgba(255,255,255,0.15)] group-hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.35)] transition-all hidden sm:inline">EDA Computers</span>
           </Link>
 
           {/* Навигационные ссылки */}
@@ -74,7 +74,7 @@ export default function Navigation() {
           </div>
 
           {/* Правая часть */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-4">
             {isAuthenticated ? (
               <div className="relative" ref={userMenuRef}>
                 <button
@@ -144,7 +144,7 @@ export default function Navigation() {
                 </AnimatePresence>
               </div>
             ) : (
-              <div className="flex items-center">
+              <div className="hidden sm:flex items-center">
                 <Link
                   href="/auth/login"
                   className="text-gray-300 hover:text-white transition-all hover:drop-shadow-[0_0_10px_rgba(0,255,255,0.6)]"
@@ -153,7 +153,7 @@ export default function Navigation() {
                 </Link>
                 <Link
                   href="/auth/register"
-                  className="px-4 py-2 bg-gradient-to-r from-neon-cyan to-neon-pink text-dark-950 font-bold rounded-lg hover:from-neon-пink hover:to-neon-cyan transition-all duration-300 shadow-[0_0_18px_rgba(255,0,153,0.35)]"
+                  className="px-3 sm:px-4 py-2 bg-gradient-to-r from-neon-cyan to-neon-pink text-dark-950 font-bold rounded-lg hover:from-neon-pink hover:to-neon-cyan transition-all duration-300 shadow-[0_0_18px_rgba(255,0,153,0.35)]"
                 >
                   Регистрация
                 </Link>
@@ -191,60 +191,62 @@ export default function Navigation() {
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden border-t border-white/10 py-4 bg-dark-900/70 backdrop-blur-xl rounded-b-xl"
             >
-              <Link
-                href="/"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-gray-300 hover:text-white transition-colors px-1"
-              >
-                Главная
-              </Link>
-              <Link
-                href="/constructor"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-gray-300 hover:text-white transition-colors px-1"
-              >
-                Конструктор
-              </Link>
-              <Link
-                href="/builds"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-gray-300 hover:text-white transition-colors px-1"
-              >
-                Готовые сборки
-              </Link>
-              <Link
-                href="/about"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="text-gray-300 hover:text-white transition-colors px-1"
-              >
-                О нас
-              </Link>
-              {isAuthenticated && (
-                <button
-                  onClick={handleLogout}
-                  className="text-left text-red-400 hover:text-red-300 transition-colors px-1"
+              <div className="flex flex-col gap-3 px-2">
+                <Link
+                  href="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-gray-300 hover:text-white transition-colors px-2 py-2 rounded-lg hover:bg-white/5"
                 >
-                  Выйти
-                </button>
-              )}
-              {!isAuthenticated && (
-                <>
-                  <Link
-                    href="/auth/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-gray-300 hover:text-white transition-colors px-1"
+                  Главная
+                </Link>
+                <Link
+                  href="/constructor"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-gray-300 hover:text-white transition-colors px-2 py-2 rounded-lg hover:bg-white/5"
+                >
+                  Конструктор
+                </Link>
+                <Link
+                  href="/builds"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-gray-300 hover:text-white transition-colors px-2 py-2 rounded-lg hover:bg白/5"
+                >
+                  Готовые сборки
+                </Link>
+                <Link
+                  href="/about"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="block text-gray-300 hover:text-white transition-colors px-2 py-2 rounded-lg hover:bg-white/5"
+                >
+                  О нас
+                </Link>
+                {isAuthenticated && (
+                  <button
+                    onClick={handleLogout}
+                    className="text-left text-red-400 hover:text-red-300 transition-colors px-2 py-2 rounded-lg hover:bg-white/5"
                   >
-                    Войти
-                  </Link>
-                  <Link
-                    href="/auth/register"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="px-4 py-2 bg-gradient-to-r from-neon-cyan to-neon-pink text-dark-950 font-bold rounded-lg hover:from-neon-пink hover:to-neon-cyan transition-all duration-300 text-center shadow-[0_0_18px_rgba(255,0,153,0.35)]"
-                  >
-                    Регистрация
-                  </Link>
-                </>
-              )}
+                    Выйти
+                  </button>
+                )}
+                {!isAuthenticated && (
+                  <>
+                    <Link
+                      href="/auth/login"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block text-gray-300 hover:text-white transition-colors px-2 py-2 rounded-lg hover:bg-white/5"
+                    >
+                      Войти
+                    </Link>
+                    <Link
+                      href="/auth/register"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="block px-4 py-2 bg-gradient-to-r from-neon-cyan to-neon-pink text-dark-950 font-bold rounded-lg hover:from-neon-pink hover:to-neon-cyan transition-all duration-300 text-center shadow-[0_0_18px_rgba(255,0,153,0.35)]"
+                    >
+                      Регистрация
+                    </Link>
+                  </>
+                )}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
