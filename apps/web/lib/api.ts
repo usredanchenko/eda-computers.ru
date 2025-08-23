@@ -1,6 +1,10 @@
 import { CreateOrderData, CreateReviewData, PasswordChangeData, User, ApiResponse, Order, Review, OrderStatus } from '@/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+// Use relative base URL in browser to avoid mixed content and domain mismatch
+// Fallback to internal service URL on server (SSR) if provided
+const API_BASE_URL = typeof window !== 'undefined' 
+  ? '' 
+  : (process.env.NEXT_PUBLIC_API_URL || 'http://server:3001');
 
 class ApiClient {
   private csrfToken: string | null = null;
