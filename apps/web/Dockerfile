@@ -8,7 +8,8 @@ WORKDIR /app
 
 # Копируем файлы зависимостей
 COPY package*.json ./
-# Устанавливаем все зависимости для сборки (dev нужны для build: tailwind/postcss)
+# Важно: для сборки Next нужны dev-зависимости (tailwindcss, typescript и т.п.)
+# Ставим все зависимости, но игнорируем скрипты (husky и т.д.)
 RUN npm ci --ignore-scripts || npm install --ignore-scripts
 
 # Этап сборки
