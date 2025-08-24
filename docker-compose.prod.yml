@@ -44,8 +44,8 @@ services:
   # Express.js сервер
   server:
     build:
-      context: .
-      dockerfile: server/Dockerfile
+      context: ./server
+      dockerfile: Dockerfile
     container_name: eda-computers-server
     restart: unless-stopped
     environment:
@@ -89,8 +89,8 @@ services:
   # Next.js веб-приложение
   web:
     build:
-      context: .
-      dockerfile: apps/web/Dockerfile
+      context: ./apps/web
+      dockerfile: Dockerfile
     container_name: eda-computers-web
     restart: unless-stopped
     environment:
