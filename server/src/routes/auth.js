@@ -16,6 +16,7 @@ const pool = new Pool({
 });
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN || '';
 
 // Генерация CSRF токена
 router.get('/csrf-token', (req, res) => {
@@ -24,6 +25,8 @@ router.get('/csrf-token', (req, res) => {
     httpOnly: false,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
+    path: '/',
+    ...(process.env.NODE_ENV === 'production' && COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {}),
     maxAge: 24 * 60 * 60 * 1000 // 24 часа
   });
   res.json({ csrfToken });
@@ -115,6 +118,7 @@ router.post('/register', authRateLimit, validateRegistration, validateCSRF, asyn
       sameSite: 'lax',
       maxAge: 24 * 60 * 60 * 1000, // 24 часа
       path: '/'
+      , ...(process.env.NODE_ENV === 'production' && COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {})
     });
 
     res.status(201).json({
@@ -311,7 +315,8 @@ router.post('/logout', (req, res) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
-    path: '/'
+    path: '/',
+    ...(process.env.NODE_ENV === 'production' && COOKIE_DOMAIN ? { domain: COOKIE_DOMAIN } : {})
   });
   
   res.json({ 
