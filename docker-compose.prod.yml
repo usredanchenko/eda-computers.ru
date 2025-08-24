@@ -54,13 +54,14 @@ services:
       - DB_HOST=postgres
       - DB_PORT=5432
       - DB_NAME=eda_computers
-      - DB_USER=${DB_USER:-postgres}
+      - DB_USER=${DB_USER:-eda_user}
       - DB_PASSWORD=${DB_PASSWORD}
       - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRES_IN=7d
       - FRONTEND_URL=${FRONTEND_URL}
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
       - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=redis
       - CORS_ORIGIN=${CORS_ORIGIN}
       - LOG_LEVEL=info
       - YOOKASSA_SHOP_ID=${YOOKASSA_SHOP_ID}
